@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Página para facilitar la actualización de lineas cccam del deco QVIART UNIC">
+    <meta name="author" content="popov">
+
+    <title>cccam WebUI v1.3.2</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      .container{
+        margin-bottom: 15px;
+      }
+
+      .form-control{
+        margin-right: 5px;
+      }
+      hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+      }
+      .jumbotron {
+        text-align: center;
+        background-color: transparent;
+      }
+      .filestyle{
+        width:10px;
+      }
+
+      .cookies{
+        width: 100%;
+        background-color: rgb(254, 247, 233);
+      }
+
+      .cookies p{
+        margin-top: 15px;
+        text-align: center;
+      }
+
+      .cookies div{
+        margin-bottom: 0px;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container cookies">
+      <p class="text-muted">Usamos cookies únicamente con fines estadísticos.
+        <a href="http://es.wikipedia.org/wiki/Cookie_%28inform%C3%A1tica%29">¿Qu&eacute; son?</a>
+      </p>
+    </div>
+
+    <div class="jumbotron">
+      <h1>CCCAM WebUI v1.3.2</h1>
+      <h3>Actualizador de clines para QVIART <br><small>by <strong>NeTDaRk</strong> y <strong>Popov</strong></small></h3>
+
+      <p><a href="#" class="label label-warning" onclick="$('#div_instruc').toggle();">Instrucciones</a></p>
+      <div class="container panel panel-default" id="div_instruc" style="display:none;background-color: beige;">
+      <div class="panel-body text-left">
+        <ol>
+          <li>Poner la dirección IP del deco.</li>
+          <li>Seleccionar un fichero de texto con las cccam, copiarlas directamente al cuadro de texto, o buscar actualizaciones desde ForoKeys o Aalamasat pulsando sobre los botones.</li>
+          <li>Pulsar en el botón Procesar. Aparecera un formulario por cada cline (Posición que ocupará en el deco, host, puerto, usuario, contraseña)</li>
+          <li>Si se desea se pueden cambiar los valores de los campos</li>
+          <li>Pulsar en Actualizar en la linea que se quiera enviar al deco o en actualizar todas, para enviar todas.</li>
+        </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="form-horizontal form-group">
+          <label for="ip_deco" class="col-sm-4 control-label">
+            <a href="#" class="label label-info" onclick="$('#ip_help').toggle();">Info</a>
+            Dirección IP deco:
+          </label>
+          <div class="col-sm-6">
+            <!--IP DECO POR DEFECTO. Cambiar el valor aquí para dejar otra por defecto-->
+            <input type="text" id="ip_deco" class="form-control" value="192.168.1.131"/>
+          </div>
+          <div class="col-sm-offset-4 col-sm-6" role="alert" style="display:none;color: #31708f;" id="ip_help">
+            <small>Sólo la IP que tenga asignada el decodificador, sin puerto, dado que siempre es el 9999</small>
+          </div>
+        </div>
+    </div>
+
+    <div class="container">
+       <div class="form-horizontal form-group">
+          <label for="ip_deco" class="col-sm-4 control-label">Fichero:</label>
+          <div class="col-sm-6">
+
+            <input class="form-control filestyle" type="file" id="fich" data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="Seleccionar Archivo"/>
+          </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-horizontal form-group">
+            <label for="ip_deco" class="col-sm-4 control-label">Obtener CCCAM:</label>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-primary" id="btn_actualizar2">Forokeys</button>
+                <button type="button" class="btn btn-primary" id="btn_actualizar">Aalamsat</button>
+                <button type="button" class="btn btn-primary" id="btn_actualizar3">Testious</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+      <div class="form-horizontal form-group">
+          <label for="ip_deco" class="col-sm-4 control-label">Lineas cccam:</label>
+          <div class="col-sm-6">
+            <textarea rows="7" id="text_lineas" class="form-control"></textarea>
+          </div>
+          <div class="col-sm-offset-4 col-sm-6">
+            <code>C: host puerto usuario password</code>
+          </div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      <button type="button" class="btn btn-primary" id="btn_procesar" onclick="procesarT2()">Procesar</button>
+    </div>
+
+    <div class="container text-center">
+      <button type="button" class="btn btn-info" id="btn_actualizar_todos" onclick="actualizarTodos();" style="display:none;">Actualizar Todos</button>
+    </div>
+
+    <div class="container text-center" id="div_formularios">
+    </div>
+      <div class="hide" style="display: none"></div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- filestyle-->
+    <script type="text/javascript" src="https://markusslima.github.io/bootstrap-filestyle/js/bootstrap-filestyle.min.js"> </script>
+
+    <script type="text/javascript">
+
+
+
+        $(document).ready(function () {
+
+            $('#btn_actualizar3').click(function () {
+
+                jQuery.ajax = (function (_ajax) {
+
+                    var protocol = location.protocol,
+                        hostname = location.hostname,
+                        exRegex = RegExp(protocol + '//' + hostname),
+                        YQL = 'http' + (/^https/.test(protocol) ? 's' : '') + '://query.yahooapis.com/v1/public/yql?callback=?',
+                        query = 'select * from html where url="{URL}" and xpath="*"';
+
+                    function isExternal(url) {
+                        return !exRegex.test(url) && /:\/\//.test(url);
+                    }
+
+                    return function (o) {
+
+                        var url = o.url;
+
+                        if (/get/i.test(o.type) && !/json/i.test(o.dataType) && isExternal(url)) {
+
+                            // Manipulate options so that JSONP-x request is made to YQL
+
+                            o.url = YQL;
+                            o.dataType = 'json';
+
+                            o.data = {
+                                q: query.replace(
+                                    '{URL}',
+                                    url + (o.data ?
+                                        (/\?/.test(url) ? '&' : '?') + jQuery.param(o.data)
+                                    : '')
+                                ),
+                                format: 'xml'
+                            };
+
+                            // Since it's a JSONP request
+                            // complete === success
+                            if (!o.success && o.complete) {
+                                o.success = o.complete;
+                                delete o.complete;
+                            }
+
+                            o.success = (function (_success) {
+                                return function (data) {
+
+                                    if (_success) {
+                                        // Fake XHR callback.
+                                        _success.call(this, {
+                                            responseText: data.results[0]
+
+                                                // YQL screws with <script>s
+                                                // Get rid of them
+                                                .replace(/<script[^>]+?\/>|<script(.|\s)*?\/script>/gi, '')
+
+
+                                        }, 'success');
+                                    }
+
+                                };
+                            })(o.success);
+
+                        }
+
+                        return _ajax.apply(this, arguments);
+
+                    };
+
+                })(jQuery.ajax);
+
+                $('#text_lineas').empty();
+
+               $('#text_lineas').val("Cargando...");
+
+                $.ajax({
+                    url: 'http://www.testious.com/free-cccam-servers/',
+                    type: 'GET',
+                    success: function (res) {
+
+                        //var text = res.responseText;
+
+                        var myHtml = $(res.responseText).find('.text');
+                        var resultado = '';
+                        myHtml.each(function () {
+
+                            resultado = resultado + $(this).text();
+                        });
+
+
+                        var lineas = resultado.split('#');
+
+
+                        var texto = '';
+
+                        for (var i = 0; i < lineas.length; i++) {
+                            var campos = lineas[i].trim().split(' ');
+
+                            if (campos.length != 5) continue;
+
+                            texto = texto + 'C: ' + campos[1] + ' ' + campos[2] + ' ' + campos[3] + ' ' + campos[4] + '\n';
+                        }
+                        $('#text_lineas').empty();
+                        $('#text_lineas').val(texto);
+
+                    }
+                });
+
+
+
+            });
+
+            $('#btn_actualizar2').click(function () {
+
+                $('#text_lineas').empty();
+
+                $('#text_lineas').val("Cargando...");
+                $.ajax({
+                    url: 'https://docs.google.com/feeds/download/documents/export/Export?id=1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ&exportFormat=txt',
+
+                    success: function (data) {
+
+                        $('#text_lineas').val(data);
+                        var lineas = $('#text_lineas').val().split('\n');
+                        $('#text_lineas').empty();
+
+                        var texto = '';
+
+                        for (var i = 0; i < lineas.length; i++) {
+                            //console.log(i + "-" + lineas[i]);
+                            var campos = lineas[i].trim().split(' ');
+
+
+                            if (campos.length != 5 || campos[0] != 'C:') continue;
+
+                            texto = texto + 'C: ' + campos[1] + ' ' + campos[2] + ' ' + campos[3] + ' ' + campos[4] + '\n';
+
+                        }
+                        $('#text_lineas').empty();
+                        $('#text_lineas').val(texto);
+
+                    }
+                });
+
+            });
+
+
+            $('#btn_actualizar').click(function () {
+
+
+
+              jQuery.ajax = (function (_ajax) {
+
+                  var protocol = location.protocol,
+                      hostname = location.hostname,
+                      exRegex = RegExp(protocol + '//' + hostname),
+                      YQL = 'http' + (/^https/.test(protocol) ? 's' : '') + '://query.yahooapis.com/v1/public/yql?callback=?',
+                      query = 'select * from html where url="{URL}" and xpath="*"';
+
+                  function isExternal(url) {
+                      return !exRegex.test(url) && /:\/\//.test(url);
+                  }
+
+                  return function (o) {
+
+                      var url = o.url;
+
+                      if (/get/i.test(o.type) && !/json/i.test(o.dataType) && isExternal(url)) {
+
+                          // Manipulate options so that JSONP-x request is made to YQL
+
+                          o.url = YQL;
+                          o.dataType = 'json';
+
+                          o.data = {
+                              q: query.replace(
+                                  '{URL}',
+                                  url + (o.data ?
+                                      (/\?/.test(url) ? '&' : '?') + jQuery.param(o.data)
+                                  : '')
+                              ),
+                              format: 'xml'
+                          };
+
+                          // Since it's a JSONP request
+                          // complete === success
+                          if (!o.success && o.complete) {
+                              o.success = o.complete;
+                              delete o.complete;
+                          }
+
+                          o.success = (function (_success) {
+                              return function (data) {
+
+                                  if (_success) {
+                                      // Fake XHR callback.
+                                      _success.call(this, {
+                                          responseText: data.results[0]
+
+                                              // YQL screws with <script>s
+                                              // Get rid of them
+                                              .replace(/<script[^>]+?\/>|<script(.|\s)*?\/script>/gi, '')
+
+
+                                      }, 'success');
+                                  }
+
+                              };
+                          })(o.success);
+
+                      }
+
+                      return _ajax.apply(this, arguments);
+
+                  };
+
+              })(jQuery.ajax);
+
+              $('#text_lineas').empty();
+
+              $('#text_lineas').val("Cargando...");
+
+              $.ajax({
+                  url: 'http://www.aalamsat.net/category/digital/',
+                  type: 'GET',
+                  success: function (res) {
+
+                      //var text = res.responseText;
+
+                      var myHtml = $(res.responseText).find('.entry');
+                      var resultado = '';
+                      myHtml.each(function () {
+
+                          resultado = resultado + $(this).find("p").text();
+                      });
+                      var lineas = resultado.split('\n');
+
+
+                      var texto = '';
+
+                      for (var i = 0; i < lineas.length; i++) {
+                          //console.log(i + "-" + lineas[i]);
+                          var campos = lineas[i].trim().split(' ');
+                          if (campos.length != 5) continue;
+
+                          texto = texto + lineas[i] + '\n';
+                      }
+                      $('#text_lineas').empty();
+                      $('#text_lineas').val(texto);
+                  }
+              });
+
+
+
+          });
+
+          $('#fich').change(function (event) {
+
+            var files = event.target.files;
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+              //console.log(e.target.result);
+              $('#text_lineas').val(e.target.result);
+            };
+            reader.readAsText(files[0]);
+          });
+
+
+          //Obtiene la IP del deco por parámetros
+          var ip = getUrlParameters("ip", "", true);
+          if(ip!=null){
+            $('#ip_deco').val(ip);
+          }
+
+
+        });
+
+
+      function enviarForm(i){
+        var url  = 'http://'+$('#ip_deco').val()+':9999';
+
+        var data = {
+          num: $('#form_' + i + ' [name="num"]').val(),
+          url: $('#form_' + i + ' [name="url"]').val(),
+          tcp: $('#form_' + i + ' [name="tcp"]').val(),
+          name: $('#form_' + i + ' [name="name"]').val(),
+          psw: $('#form_' + i + ' [name="psw"]').val(),
+          SerType: 'cccam',
+          update: 'Update'
+        };
+
+        request = $.ajax({
+          type: "POST",
+          crossDomain : true,
+          dataType:"xml",
+          mimeType:"text/xml",
+          accepts: "text/xml",
+          url: url,
+          data:data,
+          beforeSend: function(){
+            $( "#result_"+i ).html('<img style="height:20px" src="http://i.imgur.com/1MZrMhS.gif"/>');
+          },
+          complete: function( jqXHR, textStatus ){
+            if(textStatus==='timeout'){
+              $( "#result_"+i ).html('<img style="height:20px" src="http://i.imgur.com/qStQE2t.gif"/>');
+            }else{
+              $( "#result_"+i ).html('<img style="height:20px" src="http://i.imgur.com/nUnBpQb.png"/>');
+            }
+          },
+          timeout: 4000
+        });
+      }
+
+      function actualizarTodos(){
+        $('form').each(function(){
+          var formId=$(this).attr('formid');
+          enviarForm(formId);
+        });
+      }
+
+      function procesarT2() {
+
+          $('#div_formularios').html('');
+          $('#btn_actualizar_todos').hide();
+          var ip_deco = $('#ip_deco').val();
+          var lineas = $('#text_lineas').val().split('\n');
+
+          var num = 0;
+          for (var i = 0; i < lineas.length; i++) {
+              //console.log(i + "-" + lineas[i]);
+              var campos = lineas[i].trim().split(' ');
+
+              if (campos.length != 5 || num > 39) continue;
+
+              num++;
+
+              $('#div_formularios').append('<form class="form-inline serverset" role="form" id="form_' + i + '" formid="' + i + '" action="http://' + ip_deco + '" method="post" name="serverset" target="_blank"></form>');
+              $('#form_' + i).append('<input type="text" class="form-control" style="width: 50px;" name="num" value="' + num + '"/>');
+              $('#form_' + i).append('<input type="text" class="form-control" name="url" value="' + campos[1] + '"/>');
+              $('#form_' + i).append('<input type="text" class="form-control" name="tcp" value="' + campos[2] + '"/>');
+              $('#form_' + i).append('<input type="text" class="form-control" name="name" value="' + campos[3] + '"/>');
+              $('#form_' + i).append('<input type="text" class="form-control" name="psw" value="' + campos[4] + '"/>');
+
+
+              $('#form_' + i).append('<div class="input-group col-xs-1"><span class="input-group-btn"><button onclick="enviarForm(' + i +
+               ')"value="Actualizar" class="btn btn-info" type="button">Actualizar</button></span><span id="result_' + i + '" class="input-group-addon"></span></div>');
+
+
+              $('#form_' + i).append('<br>');
+              $('#div_formularios').append('<hr class="">');
+              $('#btn_actualizar_todos').show();
+          };
+
+      }
+      function getUrlParameters(parameter, staticURL, decode){
+        var currLocation = (staticURL.length)? staticURL : window.location.search;
+        var parArr = currLocation.split("?");
+          if(parArr.length>1){
+            parArr=parArr[1].split("&");
+         }else{
+            return;
+         }
+
+        var returnBool = true;
+
+         for(var i = 0; i < parArr.length; i++){
+              parr = parArr[i].split("=");
+              if(parr[0] == parameter){
+                  return (decode) ? decodeURIComponent(parr[1]) : parr[1];
+                  returnBool = true;
+              }else{
+                  returnBool = false;
+              }
+         }
+
+         if(!returnBool) return false;
+      }
+
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-58505796-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+</html>
