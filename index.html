@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="WebUI for sending Cccam clines to Qviart Unic decoder">
       <meta name="author" content="garniev">
-      <title>Cccam WebUI by garniev</title>
+      <title>Cccam WebUI</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="css/style.css">
    </head>
@@ -19,36 +19,36 @@
       </div>
 
       <div class="jumbotron">
-         <h1>CCCAM WebUI <small>by garniev</small></h1>
+         <h1>CCCAM WebUI</h1>
          <h3>Update clines on your QVIART Unic decoder.</h3>
-         <h5>
-         Based on the original idea of <strong>NeTDaRk</strong> & <strong>Popov</strong>.
-         <h5>
-         <p><a href="#" class="label label-warning" onclick="$('#btnShowInstructions').toggle();">Instructions</a></p>
-         <div class="container panel panel-default" id="btnShowInstructions">
-            <div class="panel-body text-left">
-               <ol>
-                  <li>Write below the IP of your decoder.</li>
-                  <li>Select a way to introduce your information: using a text file, copy them into the text area, or use the available buttons to get clines from different providers.</li>
-                  <li>Click on Process button. Then a new row per cline will be shown below.</li>
-                  <li>If you want, at this moment you can update the information of some of them.</li>
-                  <li>Click on the Update button of those rows you want to send. Or click on Update All button to send them all to your decoder.</li>
-               </ol>
-            </div>
+         <h5>Based on the original idea of <strong>NeTDaRk</strong> & <strong>Popov</strong>.<h5>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-2 col-sm-offset-5" style="text-align:center;">
+            <label><a href="#" class="label label-warning" style="font-size:14px;" onclick="$('#btnShowInstructions').toggle();">Instructions</a></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="container panel panel-default" id="btnShowInstructions">
+         <div class="panel-body text-left">
+            <ol>
+               <li>Write below the IP of your decoder.</li>
+               <li>Select a way to introduce your information: using a text file, copy them into the text area, or use the available online providers to get clines.</li>
+               <li>Click on Process button. Then, a new row per cline will be shown below.</li>
+               <li>At this moment, you can update the information if you want.</li>
+               <li>Click on the Update button of those rows you want to send. Or click on Update All button to send them all to your decoder.</li>
+            </ol>
          </div>
       </div>
 
       <div class="container">
          <div class="form-horizontal form-group">
-            <label for="decoderIp" class="col-sm-4 control-label">
-            <a href="#" class="label label-info" onclick="$('#btnShowDecoderIpHelp').toggle();">Info</a>
-            Decoder IP:
-            </label>
+            <label for="decoderIp" class="col-sm-4 control-label">Decoder IP:</label>
             <div class="col-sm-6">
                <input type="text" id="decoderIp" class="form-control" value="192.168.1.131"/>
-            </div>
-            <div class="col-sm-offset-4 col-sm-6" role="alert" style="display:none;color: #31708f;" id="btnShowDecoderIpHelp">
-               <small>Select only the IP of your decoder. You can get this information from Settings > Network > IP configuration.</small>
             </div>
          </div>
       </div>
@@ -64,7 +64,7 @@
 
       <div class="container">
          <div class="form-horizontal form-group">
-            <label for="decoderIp" class="col-sm-4 control-label">Get clines from:</label>
+            <label for="decoderIp" class="col-sm-4 control-label">Online providers:</label>
             <div class="col-sm-6">
                <button type="button" class="btn btn-primary" id="btnGetClinesForokeys">Forokeys</button>
                <button type="button" class="btn btn-primary" id="btnGetClinesAalamsat">Aalamsat</button>
@@ -75,13 +75,9 @@
 
       <div class="container">
          <div class="form-horizontal form-group">
-            <label for="decoderIp" class="col-sm-4 control-label">Cccam clines:</label>
+            <label for="decoderIp" class="col-sm-4 control-label">Clines:</label>
             <div class="col-sm-6">
                <textarea rows="7" id="clinesTextArea" class="form-control"></textarea>
-            </div>
-            <div class="col-sm-offset-4 col-sm-6">
-               <code>C: host port user password</code><br/>
-               <code>N: host port user password DESKey</code>
             </div>
          </div>
       </div>

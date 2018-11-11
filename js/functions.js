@@ -203,20 +203,24 @@ $(document).ready(function () {
 });
 
 
-function sendClineForm(position) {
+function sendClineForm(i) {
 	var url = 'http://' + $('#decoderIp').val() + ':9999';
-  var clineType = $('#form_' + position + ' [name="type"]').val();
+  var clineType = $('#form_' + i + ' [name="type"]').val();
 
 	var data = {
-		num: $('#form_' + position + ' [name="num"]').val(),
-		url: $('#form_' + position + ' [name="url"]').val(),
-		tcp: $('#form_' + position + ' [name="tcp"]').val(),
-		name: $('#form_' + position + ' [name="name"]').val(),
-		psw: $('#form_' + position + ' [name="psw"]').val(),
-    des: clineType == 'N:' ? $('#form_' + position + ' [name="des"]').val() : '',
+		num: $('#form_' + i + ' [name="num"]').val(),
+		url: $('#form_' + i + ' [name="url"]').val(),
+		tcp: $('#form_' + i + ' [name="tcp"]').val(),
+		name: $('#form_' + i + ' [name="name"]').val(),
+		psw: $('#form_' + i + ' [name="psw"]').val(),
+		//des: clineType == 'N:' ? $('#form_' + i + ' [name="des"]').val() : '',
 		SerType: clineType == 'C:' ? 'cccam' : 'NewCS',
 		update: 'Update'
 	};
+
+  if (clineType == 'N:') {
+    data.des = $('#form_' + i + ' [name="des"]').val();
+  }
 
 	request = $.ajax({
 		type: "POST",
@@ -227,13 +231,13 @@ function sendClineForm(position) {
 		url: url,
 		data: data,
 		beforeSend: function () {
-			$("#result_" + position).html('<img style="height:20px" src="http://i.imgur.com/1MZrMhS.gif"/>');
+			$("#result_" + i).html('<img style="height:20px" src="http://i.imgur.com/1MZrMhS.gif"/>');
 		},
 		complete: function (jqXHR, textStatus) {
 			if (textStatus === 'timeout') {
-				$("#result_" + position).html('<img style="height:20px" src="http://i.imgur.com/qStQE2t.gif"/>');
+				$("#result_" + i).html('<img style="height:20px" src="http://i.imgur.com/qStQE2t.gif"/>');
 			} else {
-				$("#result_" + position).html('<img style="height:20px" src="http://i.imgur.com/nUnBpQb.png"/>');
+				$("#result_" + i).html('<img style="height:20px" src="http://i.imgur.com/nUnBpQb.png"/>');
 			}
 		},
 		timeout: 4000
@@ -249,9 +253,10 @@ function btnUpdateAllClinesClick() {
 
 function btnCleanDataClick() {
   $('#allClinesForm').html('');
-  $('#clinesTextArea').empty();
+  $('#clinesTextArea').val('');
   $('#btnUpdateAllClines').hide();
   $('#btnCleanData').hide();
+  $('#fileSelector').val('');
 }
 
 function btnProcessDataClick() {
@@ -263,6 +268,7 @@ function btnProcessDataClick() {
 	var allClines = $('#clinesTextArea').val().trim().split('\n');
 
 	var position = 0;
+
 	for (var i = 0; i < allClines.length; i++) {
 		var fields = allClines[i].trim().split(' ');
 
@@ -279,9 +285,10 @@ function btnProcessDataClick() {
 
 		position++;
 
-		$('#allClinesForm').append('<form class="form-inline serverset" role="form" id="form_' + i + '" formRowId="' + i + '" action="http://' + decoderIp + '" method="post" name="serverset" target="_blank"></form>');
-		$('#form_' + i).append('<input type="text" class="form-control" name="num" style="width: 50px;" value="' + position + '"/>');
-    $('#form_' + i).append('<input type="text" class="form-control" name="type" style="width: 50px;" value="' + fields[0] + '"/>');
+		$('#allClinesForm').append('<form class="form-inline serverset" role="form" id="form_' + i + '" formRowId="' + i +
+      '" action="http://' + decoderIp + '" method="post" name="serverset" target="_blank"></form>');
+		$('#form_' + i).append('<input type="text" class="form-control" name="num" style="width: 45px;" value="' + position + '"/>');
+    $('#form_' + i).append('<input type="text" class="form-control" name="type" style="width: 40px;" value="' + fields[0] + '"/>');
 		$('#form_' + i).append('<input type="text" class="form-control" name="url" value="' + fields[1] + '"/>');
 		$('#form_' + i).append('<input type="text" class="form-control" name="tcp" value="' + fields[2] + '"/>');
 		$('#form_' + i).append('<input type="text" class="form-control" name="name" value="' + fields[3] + '"/>');
