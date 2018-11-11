@@ -1,0 +1,29 @@
+.container{
+  margin-bottom: 15px;
+}
+
+.form-control{
+  margin-right: 5px;
+}
+hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+.filestyle{
+  width:10px;
+}
+
+#btnShowInstructions {
+  display:none;
+  background-color: beige;
+}
+
+.spacing {
+  margin-bottom: 50px;
+}
