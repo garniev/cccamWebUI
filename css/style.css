@@ -27,3 +27,7 @@ hr {
 .spacing {
   margin-bottom: 50px;
 }
+
+.btn-margin-bottom {
+  margin-bottom: 4px;
+}
