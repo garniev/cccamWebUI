@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://www.boss-cccam.com/Test.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -23,7 +23,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://cccamgenerador.com/gratis/get2.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -39,7 +39,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'https://cccamgenerators.com/generator/get.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -55,7 +55,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://cccamgood.com/free/get2.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -71,7 +71,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://cccamspot.com/spot/get.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -87,7 +87,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://cccammania.com/free4/get2.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -103,7 +103,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://free-cccam.com/freecccam/get.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -119,7 +119,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://www.freecline.com/index';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
@@ -156,7 +156,7 @@ $(document).ready(function () {
     $('#clinesTextArea').val("Loading...");
 
     var url = 'http://powerfullcccam.com/powerfull/get.php';
-    $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
+    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data) {
         $('#clinesTextArea').empty();
 
         parser = new DOMParser();
